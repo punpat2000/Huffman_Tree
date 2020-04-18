@@ -29,15 +29,24 @@ public class HuffmanNode implements Comparable {
 			codes[i]=' ';
 		}
 	}
+	
 
 	public static HuffmanNode buildHuffmanTree(Heap h) throws Exception {
-		//Create a Huffman Tree from a given 
-		// heap. Returns the node that roots the resulting tree.
+
+		switch (h.size) {
+			case 0: return new HuffmanNode(0, ' ', null, null);
+			case 1: return (HuffmanNode) h.pop();
+		}
 		
-		
-		
-		//default return
-		return new HuffmanNode(0, ' ', null, null);
+		HuffmanNode n = null;
+		while (!h.isEmpty()) {
+			var n1 = (HuffmanNode) h.pop();
+			var n2 = (HuffmanNode) h.pop();
+			n = new HuffmanNode(n1.frequency + n2.frequency, ' ', n1, n2);
+			if (!h.isEmpty())
+				h.add(n);
+		}
+		return n;
 	}
 
 	
