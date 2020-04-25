@@ -33,20 +33,16 @@ public class HuffmanNode implements Comparable {
 
 	public static HuffmanNode buildHuffmanTree(Heap h) throws Exception {
 
-		switch (h.size) {
-			case 0: return new HuffmanNode(0, ' ', null, null);
-			case 1: return (HuffmanNode) h.pop();
-		}
+		if (h.isEmpty())
+			return new HuffmanNode(0, ' ', null, null);
 		
-		HuffmanNode n = null;
-		while (!h.isEmpty()) {
+		while (h.size()>1) {
 			var n1 = (HuffmanNode) h.pop();
 			var n2 = (HuffmanNode) h.pop();
-			n = new HuffmanNode(n1.frequency + n2.frequency, ' ', n1, n2);
-			if (!h.isEmpty())
-				h.add(n);
+			var n = new HuffmanNode(n1.frequency + n2.frequency, ' ', n1, n2);
+			h.add(n);
 		}
-		return n;
+		return (HuffmanNode) h.top();
 	}
 
 	
